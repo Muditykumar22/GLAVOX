@@ -9,16 +9,13 @@ const connectDB = async () => {
             return mongoose.connection;
         }
 
-        // Connect to MongoDB with retry options
-        const conn = await mongoose.connect(process.env.MONGO_URI, {
+        // Connect to local MongoDB
+        const conn = await mongoose.connect('mongodb://localhost:27017/glavox', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 10000, // Increased timeout
+            serverSelectionTimeoutMS: 5000,
             socketTimeoutMS: 45000,
-            maxPoolSize: 10,
-            retryWrites: true,
-            retryReads: true,
-            w: 'majority'
+            maxPoolSize: 10
         });
 
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);

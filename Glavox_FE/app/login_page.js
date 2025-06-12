@@ -34,10 +34,10 @@ export default function LoginPage() {
         return true;
       };
 
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
       return () => {
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+        backHandler.remove();
       };
     }, [])
   );

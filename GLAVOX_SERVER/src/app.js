@@ -13,7 +13,11 @@ const speechAnalysisRoutes = require('./routes/speechAnalysisRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 
 // 🌐 Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // 📁 Serve Static Files (for audio etc.)

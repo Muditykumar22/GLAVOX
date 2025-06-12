@@ -47,8 +47,8 @@ const timingService = {
   }
 };
 
-const API_URL = 'http://192.168.157.18:5000/api';
-const FLASK_API_URL = 'http://192.168.157.18:5001/api';
+const API_URL = 'http://172.16.149.141:5000/api';
+const FLASK_API_URL = 'http://172.16.149.141:5001/';
 
 // Add conversation history constants
 const CONVERSATION_HISTORY_KEY = 'conversation_history';
@@ -600,7 +600,7 @@ export default function AiScreen() {
       // Get transcription
       try {
         const transcriptionResponse = await axios.post(
-          `${FLASK_API_URL}/ai/transcribe`,
+          `${FLASK_API_URL}api/ai/transcribe`,
           formData,
           {
             headers: {
@@ -609,6 +609,10 @@ export default function AiScreen() {
             }
           }
         );
+
+        if (!transcriptionResponse.data || !transcriptionResponse.data.text) {
+          throw new Error('No transcription text received');
+        }
 
         // Send audio for speech analysis and scoring
         try {
@@ -628,13 +632,14 @@ export default function AiScreen() {
             await AsyncStorage.setItem('previousMetrics', JSON.stringify(analysisResponse.data.metrics));
           }
         } catch (error) {
-          console.error('Error analyzing speech:', error);
+          console.error('Error analyzing speech:', error.message);
         }
 
         const decoded = jwtDecode(token);
         await handleMicPress(decoded.userId, transcriptionResponse.data.text);
       } catch (error) {
-        console.error('Error getting transcription:', error);
+        console.error('Error getting transcription:', error.message);
+        Alert.alert('Transcription Error', error.message || 'Failed to transcribe audio');
       }
     } catch (error) {
       console.error('Error stopping recording:', error);
@@ -669,7 +674,7 @@ export default function AiScreen() {
       });
 
       const timestamp = new Date().getTime();
-      const urlWithTimestamp = `http://192.168.157.18:5000${audioUrl}`;
+      const urlWithTimestamp = `http://172.16.149.141:5000${audioUrl}`;
       console.log(urlWithTimestamp);
 
       // Load and play the new sound

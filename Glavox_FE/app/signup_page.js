@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,16 +9,15 @@ import {
   ImageBackground,
   Alert,
   ActivityIndicator,
-  BackHandler,
 } from "react-native";
 import { useRouter } from "expo-router";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Animatable from "react-native-animatable";
-import { useFocusEffect } from "@react-navigation/native"; // 👈 Required for back handler
 
-const API_URL = "http://192.168.157.18:5000/api";
+// Use your computer's IP address here
+const API_URL = "http://172.16.149.141:5000/api";  // Replace with your actual IP address
 
 export default function SignupScreen() {
   const [name, setName] = useState("");
@@ -27,22 +26,6 @@ export default function SignupScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  // 👇 Back button handler for Android
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        router.replace("/login_page"); // Navigate to login screen
-        return true;
-      };
-
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
-
-      return () => {
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-      };
-    }, [])
-  );
 
   const handleSignup = async () => {
     if (!name || !email || !password) {
@@ -117,6 +100,13 @@ export default function SignupScreen() {
         duration={2000}
         style={styles.container}
       >
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => router.replace("/login_page")}
+        >
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+
         <Image
           source={require("../assets/images/LOGO.png")}
           style={styles.logo}
@@ -264,5 +254,11 @@ const styles = StyleSheet.create({
   loginLink: {
     color: "blue",
     fontWeight: "bold",
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    padding: 10,
   },
 });

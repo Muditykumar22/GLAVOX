@@ -3,10 +3,10 @@ const express = require("express");
 const router = express.Router();
 const { SpeechClient } = require('@google-cloud/speech');
 const { textToSpeech, speakWithPolly } = require("./speechController");
-const { OpenAI } = require("openai");
+const Groq = require("groq-sdk");
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
 });
 
 const speechClient = new SpeechClient();
@@ -37,7 +37,7 @@ const transcribeAudio = async (audioBuffer) => {
     }
 };
 
-// 🤖 OpenAI-based Chat Function
+// 🤖 Groq-based Chat Function
 const chatWithAI = async (userText, conversationHistory = []) => {
     try {
         const messages = [
@@ -53,7 +53,6 @@ const chatWithAI = async (userText, conversationHistory = []) => {
 - If context is unclear, reference specific earlier points in the conversation
 
 2. RESPONSE STYLE:
-- Respond in a natural,humanised conversational tone
 - Respond in a natural,humanised conversational tone
 - Keep responses concise but contextually relevant
 - Maintain consistent personality throughout the conversation
@@ -99,18 +98,40 @@ Remember: You're having a continuous conversation, not isolated exchanges. Each 
             },
         ];
 
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4",
+        const completion = await groq.chat.completions.create({
+            model: "llama3-70b-8192",
             messages: messages,
             temperature: 0.7,
-            max_tokens: 100,
+            max_tokens: 150,
+            top_p: 0.9,
+            frequency_penalty: 0.3,
+            presence_penalty: 0.3,
+            stream: false,
         });
 
-        const reply = completion.choices[0]?.message?.content;
-        return reply || "No response from AI";
+        if (!completion.choices || !completion.choices[0]?.message?.content) {
+            throw new Error("Invalid response from Groq");
+        }
+
+        const reply = completion.choices[0].message.content.trim();
+        
+        if (reply.length > 200) {
+            return reply.substring(0, 200) + "...";
+        }
+        
+        return reply || "I apologize, but I couldn't generate a proper response. Could you please try again?";
     } catch (error) {
-        console.error("❌ OpenAI Error:", error.message);
-        return "AI response error";
+        console.error("❌ Groq Error:", error.message);
+        if (error.message.includes("rate limit")) {
+            return "I'm getting too many requests right now. Please try again in a moment.";
+        } else if (error.message.includes("invalid api key")) {
+            console.error("Invalid Groq API key configuration");
+            return "I'm having trouble connecting to my brain right now. Please try again later.";
+        } else if (error.message.includes("model_decommissioned")) {
+            console.error("Model is no longer supported. Please update the model name.");
+            return "I'm currently updating my systems. Please try again in a moment.";
+        }
+        return "I encountered an error while processing your request. Please try again.";
     }
 };
 
