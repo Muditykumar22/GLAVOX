@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Animatable from "react-native-animatable";
 
 // Use your computer's IP address here
-const API_URL = "http://172.16.149.141:5000/api";  // Replace with your actual IP address
+const API_URL = "http://172.16.159.170:5000/api";  // Replace with your actual IP address
 
 export default function SignupScreen() {
   const [name, setName] = useState("");
