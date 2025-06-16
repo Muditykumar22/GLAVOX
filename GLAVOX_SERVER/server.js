@@ -4,6 +4,8 @@ require('dotenv').config();
 const cors = require("cors");
 const path = require('path');
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -16,11 +18,46 @@ app.use(cors({
 
 const PORT = process.env.PORT || 5000;
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.IO with CORS
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+// WebSocket connection handling
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id);
+
+  // Handle sign language recognition data
+  socket.on('sign_language_data', (data) => {
+    // Process the sign language data
+    console.log('Received sign language data:', data);
+    
+    // Broadcast the processed data back to all clients
+    io.emit('sign_language_result', {
+      gesture: data.gesture,
+      text: data.text,
+      timestamp: new Date().toISOString()
+    });
+  });
+
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
+
 // Connect to MongoDB
 connectDB();
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
   console.log(`🌐 Accessible at http://YOUR_IP_ADDRESS:${PORT}`);
+  console.log(`🔌 WebSocket server is running on ws://localhost:${PORT}`);
 });

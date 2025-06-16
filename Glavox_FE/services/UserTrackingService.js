@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
 
-const API_URL = 'http://172.16.159.170.16.146.58:5000/api';
+const API_URL = 'http://172.16.149.74.16.146.58:5000/api';
 
 const TIMING_KEYS = {
   TRACKING_ID: '@timing_tracking_id',

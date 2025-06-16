@@ -29,7 +29,7 @@ export default function ResetPasswordPage() {
     }
 
     try {
-      const response = await fetch("http://172.16.159.170:5000/api/auth/reset-password", {
+      const response = await fetch("http://172.16.149.74:5000/api/auth/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

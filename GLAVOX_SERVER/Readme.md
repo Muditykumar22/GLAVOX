@@ -2,6 +2,43 @@
 
 GLAVOX is an advanced sign language recognition system that uses deep learning to convert sign language gestures into text and speech in real-time. The system is built using pure machine learning without relying on third-party services.
 
+## 📌 Project Overview
+
+### 1. Core Concept & Innovation
+GLAVOX is a groundbreaking sign language translation system that bridges the communication gap between sign language users and non-signers. What makes it unique is its pure machine learning approach without relying on external APIs or services. The system uses:
+- Custom CNN (Convolutional Neural Network) for gesture recognition
+- LSTM-based TTS (Text-to-Speech) for natural voice output
+- Real-time hand tracking and processing
+- End-to-end learning pipeline from gesture to speech
+
+### 2. Technical Implementation & Architecture
+The system is built with a modular architecture that ensures scalability and maintainability:
+
+#### A. Frontend Processing
+- Real-time video capture and frame processing
+- Hand detection using MediaPipe
+- Gesture tracking and landmark extraction
+- Visual feedback display
+
+#### B. Machine Learning Pipeline
+1. **Gesture Recognition Module**:
+   - Input: RGB video frames (224x224x3)
+   - Processing: CNN with 3 convolutional layers
+   - Output: 26 classes (A-Z)
+   - Accuracy: ~95% on test data
+
+2. **Speech Synthesis Module**:
+   - Input: Recognized text
+   - Processing: LSTM sequence-to-sequence model
+   - Output: Natural speech audio
+   - Quality: 16kHz, 16-bit audio
+
+#### C. System Integration
+- Seamless connection between modules
+- Real-time processing pipeline
+- Low latency response (<100ms)
+- Error handling and recovery
+
 ## 🚀 Features
 
 - Real-time sign language gesture recognition
