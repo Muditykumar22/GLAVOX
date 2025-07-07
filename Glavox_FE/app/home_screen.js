@@ -26,7 +26,7 @@ export default function HomeScreen() {
   const popUpAnimation = useRef(new Animated.Value(0)).current;
   const scrollY = useRef(new Animated.Value(0)).current;
   const { user } = useAuth();
-  const API_URL = "http://192.168.1.10:5000/api";
+  const API_URL = "http://192.168.170.195:5000/api";
   console.log("user object", user);
   
 

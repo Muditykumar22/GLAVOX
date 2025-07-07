@@ -50,7 +50,7 @@ router.post('/chat', auth, async (req, res) => {
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
     }
-
+    
     // 🧠 Get AI Response with conversation history
     const aiReply = await chatWithAI(message, conversationHistory);
 
@@ -67,6 +67,7 @@ router.post('/chat', auth, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // 🎯 Route: POST /ai/transcribe
 // 📥 Input: audio file

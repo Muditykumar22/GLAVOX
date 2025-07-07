@@ -10,7 +10,7 @@ const connectDB = async () => {
         }
 
         // Connect to local MongoDB
-        const conn = await mongoose.connect('mongodb://localhost:27017/glavox', {
+        const conn = await mongoose.connect('mongodb+srv://s8634878:t9QxpzL5Vunmz89X@cluster0.3wonooh.mongodb.net/', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 5000,

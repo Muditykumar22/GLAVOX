@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Animatable from "react-native-animatable";
 
 // Use your computer's IP address here
-const API_URL = "http://172.16.149.74:5000/api";  // Replace with your actual IP address
+const API_URL = "http://192.168.170.195:5000/api";  // Replace with your actual IP address
 
 export default function SignupScreen() {
   const [name, setName] = useState("");
@@ -47,6 +47,7 @@ export default function SignupScreen() {
 
     setIsLoading(true);
     try {
+      console.log("Attempting to sign up with:", { name, email });
       const response = await axios.post(
         `${API_URL}/auth/signup`,
         {
@@ -59,11 +60,15 @@ export default function SignupScreen() {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          timeout: 10000, // 10 second timeout
         }
       );
 
+      console.log("Signup response:", response.data);
+
       if (response.data.token) {
         await AsyncStorage.setItem("token", response.data.token);
+        await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
         Alert.alert("Success", "Account created successfully!", [
           {
             text: "OK",
@@ -72,11 +77,18 @@ export default function SignupScreen() {
         ]);
       }
     } catch (error) {
-      console.error("Signup error:", error);
-      if (error.response?.status === 401) {
+      console.error("Signup error:", error.response?.data || error.message);
+      if (error.code === 'ECONNABORTED') {
+        Alert.alert("Connection Error", "Server is not responding. Please check your internet connection and try again.");
+      } else if (error.response?.status === 401) {
         Alert.alert(
           "Authentication Error",
           "Please check your credentials and try again."
+        );
+      } else if (error.response?.status === 409) {
+        Alert.alert(
+          "Account Exists",
+          "An account with this email already exists. Please try logging in instead."
         );
       } else {
         Alert.alert(

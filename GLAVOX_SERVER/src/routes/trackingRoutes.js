@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { Chat } = require('groq-sdk/resources/index.mjs');
 
 // Configure multer for audio file upload
 const storage = multer.diskStorage({
@@ -44,6 +45,10 @@ router.use(authMiddleware);
 
 // Start chat tracking
 router.post('/start-chat', trackingController.startChatTracking);
+console.log(res, req('/start-chat'));
+
+
+
 
 // End chat tracking
 router.post('/end-chat', trackingController.endChatTracking);

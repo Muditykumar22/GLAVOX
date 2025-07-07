@@ -13,7 +13,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   origin: '*', // Allow all origins in development
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  credentials: true
 }));
 
 const PORT = process.env.PORT || 5000;
@@ -25,7 +26,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
@@ -58,6 +60,6 @@ connectDB();
 // Start server
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
-  console.log(`🌐 Accessible at http://YOUR_IP_ADDRESS:${PORT}`);
-  console.log(`🔌 WebSocket server is running on ws://localhost:${PORT}`);
+  console.log(`🌐 Accessible at http://192.168.170.195:${PORT}`); // Replace with your actual IP
+  console.log(`🔌 WebSocket server is running on ws://192.168.170.195:${PORT}`); // Replace with your actual IP
 });
