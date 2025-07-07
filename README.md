@@ -42,7 +42,6 @@ This empowers users to track and accelerate their speaking skill development wit
   responseTime-80
   interactionFlow-92
   combined-70
-
   Metrics Object
   wordAccuracy-60
   phonemeAccuracy-50
@@ -52,6 +51,7 @@ This empowers users to track and accelerate their speaking skill development wit
   noiseLevel-25
   contextRelevance-100
 }
+
 5. **User message is sent to Groq API** for instant, context-aware AI response.
 6. **Text-to-Speech (TTS) is generated using Amazon Polly** for natural audio feedback.
 7. **Both analytics and AI response are returned to the user** in real-time.
