@@ -60,6 +60,6 @@ connectDB();
 // Start server
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
-  console.log(`🌐 Accessible at http://192.168.170.195:${PORT}`); // Replace with your actual IP
-  console.log(`🔌 WebSocket server is running on ws://192.168.170.195:${PORT}`); // Replace with your actual IP
+  console.log(`🌐 Accessible at http://44.217.120.1:${PORT}`); // Replace with your actual IP
+  console.log(`🔌 WebSocket server is running on ws://44.217.120.1:${PORT}`); // Replace with your actual IP
 });
