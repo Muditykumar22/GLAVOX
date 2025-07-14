@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://44.217.120.1:5000/api';
 
 async function testSpeechAnalysis() {
   try {

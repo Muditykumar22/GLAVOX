@@ -13,7 +13,7 @@ class WebSocketService {
     return WebSocketService.instance;
   }
 
-  public connect(serverUrl: string = 'http://localhost:5000'): void {
+  public connect(serverUrl: string = 'http://44.217.120.1:5000'): void {
     if (!this.socket) {
       this.socket = io(serverUrl, {
         transports: ['websocket'],
