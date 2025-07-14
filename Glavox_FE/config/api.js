@@ -1,5 +1,3 @@
-import Constants from 'expo-constants';
-
 // Get the local IP address from your computer
 const getLocalIP = () => {
   // You can replace this with your computer's IP address
