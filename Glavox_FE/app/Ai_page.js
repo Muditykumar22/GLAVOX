@@ -47,8 +47,8 @@ const timingService = {
   }
 };
 
-const API_URL = 'http://192.168.170.195:5000/api';
-const FLASK_API_URL = 'http://192.168.170.195:5001/';
+const API_URL = 'http://44.217.120.1:5000/api';
+const FLASK_API_URL = 'http://44.217.120.1:5001/';
 
 // Add conversation history constants
 const CONVERSATION_HISTORY_KEY = 'conversation_history';
@@ -674,7 +674,7 @@ export default function AiScreen() {
       });
 
       const timestamp = new Date().getTime();
-      const urlWithTimestamp = `http://192.168.170.195:5000${audioUrl}`;
+      const urlWithTimestamp = `http://44.217.120.1:5000${audioUrl}`;
       console.log(urlWithTimestamp);
 
       // Load and play the new sound

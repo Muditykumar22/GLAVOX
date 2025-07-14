@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 // Get the local IP address from your computer
 const getLocalIP = () => {
   // You can replace this with your computer's IP address
-  return '192.168.170.195'; // Replace with your actual local IP address
+  return '44.217.120.1'; // Replace with your actual local IP address
 };
 
 const ENV = {

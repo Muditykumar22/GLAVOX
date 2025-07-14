@@ -14,7 +14,7 @@ import {
 import { useRouter, useFocusEffect } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const BASE_URL = "http://192.168.170.195:5000/";
+const BASE_URL = "http://44.217.120.1:5000/";
 
 export default function ProfileScreen() {
   const router = useRouter();

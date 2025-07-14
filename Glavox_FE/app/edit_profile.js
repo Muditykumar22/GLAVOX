@@ -55,7 +55,7 @@ export default function EditProfileScreen() {
   const handleSave = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(`http://192.168.170.195:5000/api/profile/update`, {
+      const response = await fetch(`http://44.217.120.1:5000/api/profile/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
